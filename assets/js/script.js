@@ -1,16 +1,15 @@
-var textDisplayEl = $("#textDisplay")
-var textResponse = $("#textResponse")
-var formEl = $("#inputForm")
-var scoreEl = $("#score")
-var timerEl = $("#timer")
-var btn1 =  $("#btn1")
-var btn2 =  $("#btn2")
-var btn3 =  $("#btn3")
-var btn4 =  $("#btn4")
-var btnStart = $("#btnStart")
+var textDisplayEl =  document.getElementById("textDisplay")
+var textResponseEl = document.getElementById("textResponse")
+var formEl = document.getElementById("inputForm")
+var scoreEl = document.getElementById("score")
+var timerEl = document.getElementById("timer")
+var btn1 =  document.getElementById("btn1")
+var btn2 =  document.getElementById("btn2")
+var btn3 =  document.getElementById("btn3")
+var btn4 =  document.getElementById("btn4")
+var btnStart = document.getElementById("btnStart")
+var score = 0;
 var time = 60;
-var i = 0;
-var score = 0;   
 
 
 var trivia1 = {
@@ -31,108 +30,85 @@ var trivia2 = {
     answer: '4'
 }
 
-var questions = [trivia1, trivia2]
-
-// only show start button
-btn1.hide();
-btn2.hide();
-btn3.hide();
-btn4.hide();
-btnStart.show();
-
-function timer (interval) {
-    time --; //decrement time
-    timerEl.text(time); //post updated time to el
-    if (time <= 0) {   //if time is over,
-        gameOver(interval)
-        return
-    }
+var trivia3 = {
+    question: "Strings values must be enclosed within _____.",
+    answer1: "parentheses",
+    answer2: "brackets",
+    answer3: "commas",
+    answer4: "periods",
+    answer: '1'
 }
 
-function displayQuestion(i) {
-    q = questions[i]
-    textDisplayEl.text(q.question)
-    btn1.text(q.answer1)
-    btn2.text(q.answer2)
-    btn3.text(q.answer3)
-    btn4.text(q.answer4)
-}
-
-function gameOver(interval) {
-    score = 0; //reset score everytime game is replayed
-    time = 60;  //reset time everytime game is replayed
-    i = 0;
-    clearInterval(interval);
-    textDisplayEl.text("Game Over!")
-    textResponse.text("")
-    time = 0
-    btn1.hide();
-    btn2.hide();
-    btn3.hide();
-    btn4.hide();
-    btnStart.text("Play Again?")
-    btnStart.show();
-
-}
-
-function runGame() {
-    i = 0;
-    time = 60;
-    score = 0;   
-
-    displayQuestion(i) 
-
-    // start timer countdown 
-    var interval = window.setInterval(timer, 1000);
-    timerEl.text(time)
-    scoreEl.text(score)
-
-    // hide start button, show quiz buttons
-    btn1.show();
-    btn2.show();
-    btn3.show();
-    btn4.show();
-    btnStart.hide();
-
-    formEl.on("click", function(event) {
-        event.stopPropagation()
-        btnInput = event.target.id  //get text value of button clicked
-        btnVal = btnInput.slice(-1)  //grab number from text value
+// create list containing question objects
+var questions = [trivia1, trivia2, trivia3]
 
 
-        if (btnVal == questions[i].answer){
-            textResponse.text("Correct!")
-            console.log("correct!");
-            score += 1 ;
-            scoreEl.text(score)
-            console.log(1)
-
-
-        } else {
-            textResponse.text("Wrong!")
-            console.log("Incorrect!");
-            time = time - 5;
-            console.log(2)
-
+var startTimer = function() {
+    function timer () {
+        time --;
+        timerEl.innerHTML = time
+        if (time <=0 )
+            {                
+                timerEl.innerHTML = 0;
+                clearInterval(interval);
+            }
         }
-
-        i ++ ;
-        // console.log(i)
-        // verify questions are in queue
-        if (i === questions.length) {
-            console.log(3)
-
-            gameOver(interval)
-            return
-        } 
-        displayQuestion(i)         
-
-    })     
-
+    var interval = setInterval(timer, 1000)    
 }
 
 
-btnStart.on("click", runGame)
+
+// formEl.hide()  // hide buttons by default
+formEl.style.display = "none"
+
+function runGame () {
+    // formEl.show()  // show buttons
+    // btnStart.hide()  // hide start button
+
+    formEl.style.display = "block"
+    btnStart.style.display = "none"
+
+
+    startTimer()  //start timer
+
+    var i = 0;
+    textDisplayEl.textContent = questions[i].question
+    btn1.textContent = questions[i].answer1
+    btn2.textContent = questions[i].answer2
+    btn3.textContent = questions[i].answer3
+    btn4.textContent = questions[i].answer4
+
+    formEl.addEventListener("click", function (event) {
+        event.stopPropagation()
+        var answer = questions[i].answer
+        if (event.target.id.slice(-1) === answer){
+            textResponseEl.innerHTML = "Correct!"
+            score ++
+            scoreEl.innerHTML = score
+        } else {
+            textResponseEl.innerHTML = "Incorrect!"
+            time = time - 5
+        }
+        i ++;
+        if (i < questions.length) {
+            textDisplayEl.textContent = questions[i].question
+            btn1.textContent = questions[i].answer1
+            btn2.textContent = questions[i].answer2
+            btn3.textContent = questions[i].answer3
+            btn4.textContent = questions[i].answer4
+            var answer = questions[i].answer
+        } else {
+            console.log("end game")
+            time = 0
+            return
+        }
+    })
+
+    console.log("runGame")
+}
+
+
+btnStart.addEventListener("click", runGame)
 
 
 
