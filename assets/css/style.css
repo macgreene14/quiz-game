@@ -1,0 +1,36 @@
+* {
+    padding: 1%;
+    margin: 1%;
+}
+
+/* #score, #time {
+    text-decoration: underline;
+} */
+
+#textDisplay {
+    font-size: 6vw;
+    text-align: center;
+}
+
+#textResponse {
+    text-align: center;
+    font-style: italic;
+}
+
+#quizEl {
+    padding: 0%;
+    border-style: dashed;
+}
+
+.btn {
+    min-width: 100%;
+    min-height: 5em;
+    font-family: monospace;
+    font-size: 100%;
+}
+
+@media only screen and (min-width: 600px) {
+    .btn {
+        font-size: 200%;
+    }
+  }
