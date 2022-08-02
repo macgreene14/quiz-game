@@ -36,7 +36,7 @@ var trivia2 = {
 
 var trivia3 = {
     question: "Strings values must be enclosed within _____.",
-    answer1: "parentheses",
+    answer1: "quotation marks",
     answer2: "brackets",
     answer3: "commas",
     answer4: "periods",
@@ -44,11 +44,11 @@ var trivia3 = {
 }
 
 var trivia4 = {
-    question: "jQuery is an example of _____.",
-    answer1: "a database",
-    answer2: "an API",
-    answer3: "a programming language",
-    answer4: "a form element",
+    question: "jQuery is an example of a _____.",
+    answer1: "database",
+    answer2: "Web API",
+    answer3: "programming language",
+    answer4: "form element",
     answer: '2'
 }
 
