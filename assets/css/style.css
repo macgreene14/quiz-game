@@ -3,18 +3,24 @@
     margin: 1%;
 }
 
+body {
+    font-family: monospace;
+    background-color: gold;
+}
+
 /* #score, #time {
     text-decoration: underline;
 } */
 
 #textDisplay {
-    font-size: 6vw;
+    font-size: 4vw;
     text-align: center;
 }
 
 #textResponse {
     text-align: center;
     font-style: italic;
+    font-size: 5vw;
 }
 
 #quizEl {
@@ -22,11 +28,24 @@
     border-style: dashed;
 }
 
+.nameInput {
+    min-height: 5vh;
+    font-family: monospace;
+    margin-bottom: 5%;
+    text-align: center;
+    font-size: 200%;
+}
+
 .btn {
     min-width: 100%;
     min-height: 5em;
     font-family: monospace;
     font-size: 100%;
+    background-color: green;
+}
+
+.btn:hover {
+    background-color: grey;
 }
 
 @media only screen and (min-width: 600px) {
