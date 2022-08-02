@@ -28,6 +28,13 @@ body {
     border-style: dashed;
 }
 
+.scorestyle {
+    text-align: center;
+    font-style: italic;
+    font-size: 5vw;
+
+}
+
 .nameInput {
     min-height: 5vh;
     font-family: monospace;
@@ -52,4 +59,12 @@ body {
     .btn {
         font-size: 200%;
     }
+
+    .scorestyle {
+        text-align: center;
+        font-style: italic;
+        font-size: 4vw;
+    
+    }
+
   }

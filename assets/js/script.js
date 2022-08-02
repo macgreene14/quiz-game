@@ -13,7 +13,7 @@ var btn3 =  document.getElementById("btn3")
 var btn4 =  document.getElementById("btn4")
 var btnStart = document.getElementById("btnStart")
 var score = 0;
-var time = 10;
+var time = 60;
 
 
 var trivia1 = {
@@ -53,7 +53,7 @@ var trivia4 = {
 }
 
 var trivia5 = {
-    question: "A very useful tool sued during development and debugging for printign content to the debugger is: ",
+    question: "A very useful tool used during development and debugging for printign content to the debugger is: ",
     answer1: "javascript",
     answer2: "terminal/bash",
     answer3: "console.log",
@@ -107,11 +107,12 @@ function runGame () {
             score ++
             scoreEl.innerHTML = score
         } else {
-            textResponseEl.innerHTML = "Incorrect!"
+            textResponseEl.innerHTML = "Incorrect! -5 Seconds"
             time = time - 5
         }
         i ++;
         if (i < questions.length && time > 0) {
+            //set button content per object storage
             textDisplayEl.textContent = questions[i].question
             btn1.textContent = questions[i].answer1
             btn2.textContent = questions[i].answer2
@@ -119,15 +120,18 @@ function runGame () {
             btn4.textContent = questions[i].answer4
             var answer = questions[i].answer
         } else {
+            // questions out or time is up, end game
             console.log("end game")
             textDisplayEl.innerHTML = "All Done! Your Score:  " + score
+
             btnStart.style.display = "none"
             formEl.style.display = "none"
             textResponseEl.style.display = "none"
-            scoreFormEl.style.display = "none"
+            scoreFormEl.style.display = "block"
             time = 0
             return
         }
+        
     })
 
     console.log("run game")
@@ -135,20 +139,37 @@ function runGame () {
 
 function addScore (event) {
     event.preventDefault()
-    localStorage.setItem("Name", nameInputEl.value)
-    localStorage.setItem("Score", score)
-    localStorage.getItem("Name")
-    localStorage.getItem("Score")
-
-    btnStart.style.display = "block"
-    btnScore.style.display = "none"
+    // btnScore.style.display = "none"
     // scoreFormEl.style.display = "none"
+    // btnStart.style.display = "block"
 
+    var storedScore = JSON.parse(localStorage.getItem("scorecard"))
+    console.log(storedScore)
+
+    // convert json to string for storing locally
+    var inputScore = nameInputEl.value
+    var payload = JSON.stringify({"name" : inputScore, "score" : score})
+    console.log(payload)
+    localStorage.setItem("scorecard", payload)
+
+    newElement = document.createElement("p")
+    newElement.classList.add("scorestyle")
+    newElement.textContent = "Previous Score: " + storedScore['score'] + " -" + storedScore['name']
+    document.body.appendChild(newElement)
+
+
+    newElement = document.createElement("p")
+    newElement.classList.add("scorestyle")
+    newElement.textContent = "Your Score: " + score + " -" + inputScore
+    document.body.appendChild(newElement)
+
+
+    return
 
 }
 
 btnStart.addEventListener("click", runGame)
-scoreFormEl.addEventListener("submit", addScore)
+scoreFormEl.addEventListener("submit", addScore, {once: true})
 
 
 
